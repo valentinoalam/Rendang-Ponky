@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
+import Header from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +25,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
+      <body suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header />
         {children}
+        <footer className="py-6 h-60 w-full bg-rendang-darkbrown text-white text-center">
+          <div className="container mx-auto px-4 md:px-6 text-center">
+            <p>© 2023 Rendang Gurih. All rights reserved.</p>
+            <p className="text-sm opacity-75 mt-2">Authentic Indonesian cuisine delivered to your doorstep.</p>
+          </div>
+        </footer>
+        {/* bg-rendang-900 */}
       </body>
     </html>
   );
