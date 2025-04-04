@@ -24,13 +24,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
             isReversed ? "md:flex-row-reverse" : "md:flex-row"
           } gap-6 items-center`}
         >
-          <div className="w-full md:w-1/2 relative">
+          <div className="w-full md:w-1/2 relative group">
             <div className="w-full h-72 sm:h-96 relative overflow-hidden rounded-xl">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-rendang-darkbrown/30 z-10 rounded-xl"></div>
               <Image fill
                 src={imagePath}
                 alt={title}
-                className="w-full h-full object-cover object-[50%_85%] rounded-xl transform transition-all duration-500 hover:scale-105"
+                className="w-full h-full object-cover object-[50%_85%] rounded-xl transform transition-all duration-500 group-hover:scale-105 outline-rendang-600 outline-dashed outline-1 -outline-offset-8"
               />
             </div>
           </div>

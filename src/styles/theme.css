@@ -17,9 +17,7 @@
     --color-rendang-800: #8a3324;
     --color-rendang-900: #712e21;
     --color-rendang-950: #3d1410;
-    
-    --rendang-gradient: 135deg, #5C4033 0%, #D4A64A 100%;
-    --cta-gradient: to right, #800020, #D4A64A;
+
 }
 
 @theme inline {   
@@ -67,6 +65,29 @@
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
   
+    --e: 9.2em;
+    --f: 0.5;
+    --c0: var(--light);
+    --c1: var(--golden);
+    --n: 5;
+    --va: calc((var(--n) - 2) * 180deg / var(--n));
+    --ba: calc(360deg / var(--n));
+    --pa: calc(2 * (90deg - var(--ba)));
+    --r: calc(0.5 * var(--e));
+    --rb: calc(var(--f) * var(--r));
+    --ri: calc(var(--rb) * 0.3090); /* sin(18°) ≈ 0.3090 */
+    --rc: calc(var(--ri) / 0.8090); /* cos(36°) ≈ 0.8090 */
+    --ty: calc(var(--r) - var(--rb));
+    --dy: calc(var(--r) - var(--ri));
+    --oy: calc(var(--r) + var(--rc));
+
+    --s: 18px;
+    --c1:#E4844A;
+    --c2:#0D6759;
+    --g:30% 50% at 30% 100%,#0000 66%,var(--c1) 67% 98%,#0000;
+    --rendang-gradient: 135deg, #5C4033 0%, #D4A64A 100%;
+    --cta-gradient: to right, #800020, #D4A64A;
+
     --animate-accordion-down: accordion-down 0.2s ease-out;
     --animate-accordion-up: accordion-up 0.2s ease-out;
     --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;

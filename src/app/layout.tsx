@@ -37,6 +37,19 @@ export default function RootLayout({
           </div>
         </footer>
         {/* bg-rendang-900 */}
+        {/* Logo Rendang Ponky  
+
+          Kontak: "Hubungi kami di WhatsApp: 0812-xxx-xxxx"  
+
+          Ikon media sosial (Instagram, Facebook)  
+
+          "© 2025 Rendang Ponky – Kelezatan Tradisi dalam Setiap Gigitan"
+
+          Tujuan: Memberikan informasi kontak dan memperkuat branding.  
+
+          Tips: Jaga desain simpel dan bersih agar tidak mengalihkan perhatian dari CTA utama.
+        */}
+
       </body>
     </html>
   );

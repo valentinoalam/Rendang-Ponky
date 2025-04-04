@@ -40,10 +40,10 @@ const Products: React.FC = () => {
   return (
     <div className="w-full bg-[#FDF4EE]">
       {/* Hero Section */}
-      <section className="bg-rendang-800 text-white py-12 md:py-20">
+      <section className="border-b-rendang-800 border-t-rendang-400 border-9 box-content highlight text-white py-12 md:py-20">
         <div className="container px-4 md:px-8 lg:px-16 mx-auto">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">Rendang Delight</h1>
-          <p className="text-xl md:text-2xl opacity-90 max-w-2xl">
+          <p className="text-xl text-stone-950/80 md:text-2xl max-w-3xl font-semibold">
             Experience the authentic taste of Indonesian cuisine with our premium rendang dishes, 
             delivered straight to your door.
           </p>
