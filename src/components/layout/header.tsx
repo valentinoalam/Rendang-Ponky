@@ -55,10 +55,11 @@ const Header = () => {
 
   const navLinks = [
     { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#services', label: 'Services' },
-    { href: '#portfolio', label: 'Portfolio' },
-    { href: '#contact', label: 'Contact' },
+    { href: '#video-review', label: 'Review' },
+    { href: '#key-benefit', label: 'Benefit' },
+    { href: '#testimonials', label: 'Testimonial' },
+    { href: '#faq', label: 'faq' },
+    { href: '#products', label: 'products' },
   ];
 
   const isActive = (href: string) => {
