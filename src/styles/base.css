@@ -16,54 +16,89 @@
   }
 
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --background: hsl(237, 49%, 15%); /* #1B1833 */
+    --foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
+
+    --card: hsl(279, 56%, 21%); /* #441752 */
+    --card-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
+
+    --popover: hsl(279, 56%, 21%); /* #441752 */
+    --popover-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
+
+    --primary: hsl(42, 100%, 50%); /* #FFB200 */
+    --primary-foreground: hsl(279, 56%, 21%); /* #441752 */
+
+    --secondary: hsl(286, 77%, 21%); /* #640D5F */
+    --secondary-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
+
+    --muted: hsl(0, 5%, 20%); /* #343131 */
+    --muted-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
+
+    --accent: hsl(12, 94%, 59%); /* #EB5A3C */
+    --accent-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
+
+    --destructive: hsl(340, 80%, 47%); /* #D91656 */
+    --destructive-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
+
+    --border: hsl(279, 56%, 25%); /* A slightly lighter purple for borders */
+    --input: hsl(0, 5%, 20%); /* #343131 */
+    --ring: hsl(42, 100%, 50%); /* #FFB200 */
+
+    /* Themed chart colors for data visualization */
+    --chart-1: hsl(42, 100%, 50%); /* Vibrant Gold */
+    --chart-2: hsl(279, 56%, 21%); /* Dark Purple */
+    --chart-3: hsl(342, 85%, 29%); /* Dark Red */
+    --chart-4: hsl(209, 73%, 21%); /* Dark Blue for contrast */
+    --chart-5: hsl(20, 100%, 46%); /* Bright Orange */
+
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
+    /* Sidebar-specific variables */
+    --sidebar-background: hsl(237, 49%, 10%); /* An even darker purple for the sidebar */
+    --sidebar-foreground: hsl(46, 32%, 85%); /* A slightly lighter gold for text */
+    --sidebar-primary: hsl(42, 100%, 50%); /* Gold */
+    --sidebar-primary-foreground: hsl(279, 56%, 21%); /* Dark Purple */
+    --sidebar-accent: hsl(12, 94%, 59%); /* Red accent */
+    --sidebar-accent-foreground: hsl(46, 32%, 77%); /* Soft Gold */
+    --sidebar-border: hsl(0, 5%, 20%); /* Dark gray */
+    --sidebar-ring: hsl(42, 100%, 50%); /* Gold */
     /* Book specific variables */
-    --book-bg: 40 30% 95%;
-    --page-bg: 36 100% 99%;
-    --page-text: 215 25% 27%;
-    --book-shadow: 215 25% 27%;
-    --book-spine: 25 86% 57%;
+    --book-bg: hsl(40 30% 95%);
+    --page-bg: hsl(36 100% 99%);
+    --page-text: hsl(215 25% 27%);
+    --book-shadow: hsl(215 25% 27%);
+    --book-spine: hsl(25 86% 57%);
+
+    --gold-vibrant: hsl(42, 100%, 50%); /* #FFB200 */
+    --gold-soft: hsl(46, 32%, 77%); /* #D6CFB4 */
+    --purple-dark: hsl(279, 56%, 21%); /* #441752 */
+    --purple-medium: hsl(286, 77%, 21%); /* #640D5F */
+    --purple-shadow: hsl(237, 49%, 15%); /* #1B1833 */
+    --red-accent: hsl(12, 94%, 59%); /* #EB5A3C */
+    --red-dark: hsl(342, 85%, 29%); /* #8D0B41 */
+    --magenta-accent: hsl(340, 80%, 47%); /* #D91656 */
+    --red-orange-bright: hsl(20, 100%, 46%); /* #EB5B00 */
+    --red-purple-dark: hsl(349, 44%, 51%); /* #AB4459 */
+    --gray-dark: hsl(0, 5%, 20%); /* #343131 */
+    --blue-dark: hsl(209, 73%, 21%); /* #10375C */
 
     --golden: #D4A64A;
     --maroon: #800020;
     --darkbrown: #5C4033;
     --cream: #FFFDD0;
     --light: #b28366;
-    
+    --greenmud: #2c4f3e;
+    --size: 3;
+    --skew: 7;
+    --orange: hsl(20, 100%, 71%);
+    --svgfilter: url(#squiggly-0);
+    --boxshadow: rgb(22, 12, 3);
+    --textshadow: rgb(42, 22, 23);
+    --border-shadow: rgb(0, 0, 0);
+    --noise-image: url(data:image/png;base64,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);
+
+    /* Custom colors for Tailwind */
+    --rendang-light: #C599B6;
   }
   
   .dark {
@@ -108,26 +143,92 @@
     font-weight: 400;
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
-    background-color: #C599B6;
+    background-color: var(--rendang-light);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 1s ease;
   }
-
-  /* @media (prefers-color-scheme: light) {
-    :root {
-      color: #213547;
-      background-color: #ffffff;
-    }
-    a:hover {
-      color: #747bff;
-    }
-  } */
-
 }
+/* 
+@utility lightning{
+  display: flex;
+  position: relative;
+  margin: 4vmin;
+  filter: var(--svgfilter);
+  span {
+    color: black;
+    letter-spacing: calc(var(--size) * 1vmin);
+    font-size: 1rem;
+    padding: calc(0.5 * 1rem) 0 0 0;
+    margin-right: -1rem;
+    text-align: left;
+    text-shadow: none;
+  }
+  * {
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: calc(var(--size) * 0.8vmin) calc(var(--size) * 1.6vmin);
+    background: rgba(244, 226, 5, 1);
+    transform: skew(calc(var(--skew) * -1deg), calc(var(--skew) * -1deg));
+    font-size: calc(var(--size) * 3vmax);
+    font-weight: 700;
+    color: Crimson;
+    text-transform: uppercase;
+    text-align: right;
+    border: 3px solid var(--boxshadow);
+    border-left: 0;
+    text-shadow: 
+      var(--textshadow) 0px 0px 0px,
+      var(--textshadow) 0.669131px 0.743145px 0px,
+      var(--textshadow) 1.33826px 1.48629px 0px,
+      var(--textshadow) 2.00739px 2.22943px 0px,
+      var(--textshadow) 2.67652px 2.97258px 0px,
+      var(--textshadow) 3.34565px 3.71572px 0px,
+      var(--textshadow) 4.01478px 4.45887px 0px,
+      var(--textshadow) 4.68391px 5.20201px 0px;
+    box-shadow: 
+      var(--border-shadow) 0px 0px 0px,
+      var(--boxshadow) 0.819152px 0.573576px 0px,
+      var(--boxshadow) 1.6383px 1.14715px 0px,
+      var(--boxshadow) 2.45746px 1.72073px 0px,
+      var(--boxshadow) 3.27661px 2.29431px 0px,
+      var(--boxshadow) 4.09576px 2.86788px 0px,
+      var(--boxshadow) 4.91491px 3.44146px 0px,
+      var(--boxshadow) 5.73406px 4.01504px 0px,
+      var(--boxshadow) 6.55322px 4.58861px 0px,
+      var(--boxshadow) 7.37237px 5.16219px 0px,
+      var(--boxshadow) 8.19152px 5.73576px 0px,
+      var(--boxshadow) 9.01067px 6.30934px 0px,
+      var(--boxshadow) 9.82982px 6.88292px 0px,
+      var(--boxshadow) 10.649px 7.45649px 0px,
+      var(--boxshadow) 11.4681px 8.03007px 0px;
+  }
 
+  *:last-child {
+    left: calc(var(--size) * -1vmin);
+    position: relative;
+    text-align: left;
+  }
+
+  *:last-child span {
+    border-top: 1px solid;
+  }
+
+  .orange {
+    background-color: var(--orange);
+  }
+
+  .noisy {
+    background-image: var(--noise-image);
+  }
+} */
+
+/* Base styles for your custom classes */
 @layer base {
   * {
     @apply border-border;

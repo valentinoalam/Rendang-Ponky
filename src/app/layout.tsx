@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
-import Header from "@/components/header";
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,12 +31,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
-        <footer className="py-6 h-60 w-full bg-rendang-darkbrown text-white text-center">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <p>© 2023 Rendang Gurih. All rights reserved.</p>
-            <p className="text-sm opacity-75 mt-2">Authentic Indonesian cuisine delivered to your doorstep.</p>
-          </div>
-        </footer>
+        <Footer />
         {/* bg-rendang-900 */}
         {/* Logo Rendang Ponky  
 

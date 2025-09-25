@@ -37,7 +37,7 @@
 }
 
 @utility cta-button {
-  @apply py-3 px-6 font-bold text-white rounded-lg transition-transform duration-300 transform hover:scale-105 shadow-lg;
+  @apply py-3 px-6 font-bold text-white rounded-full transition-transform duration-300 transform hover:scale-105 shadow-lg;
   background: linear-gradient(90deg, #800020, #D4A64A);
 }
 
