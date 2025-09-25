@@ -41,6 +41,7 @@ export async function GET() {
       results: couriers,
     })
   } catch (error) {
+    console.error('Couriers API error:', error);
     return NextResponse.json(
       {
         status: {

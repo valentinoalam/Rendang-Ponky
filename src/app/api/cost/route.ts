@@ -1,5 +1,15 @@
 import { NextResponse } from "next/server"
 
+interface ShippingCost {
+  service: string
+  description: string
+  cost: {
+    value: number
+    etd: string
+    note: string
+  }[]
+}
+
 // Mock courier data
 const couriers = [
   {
@@ -43,7 +53,7 @@ const distanceMatrix: Record<string, Record<string, number>> = {
 }
 
 // Calculate shipping cost based on weight, distance, and courier
-function calculateShippingCost(originId: string, destinationId: string, weight: number, courier: string): any[] {
+function calculateShippingCost(originId: string, destinationId: string, weight: number, courier: string): ShippingCost[] {
   // Get distance between cities
   const distance = distanceMatrix[originId]?.[destinationId] || 500 // Default distance if not found
 
@@ -137,6 +147,7 @@ export async function POST(request: Request) {
       },
     })
   } catch (error) {
+    console.error('Cost API error:', error);
     return NextResponse.json(
       {
         status: {
