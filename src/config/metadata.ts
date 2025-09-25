@@ -55,8 +55,8 @@ export const METADATA: MetadataConfig = {
         {
           // Ganti dengan gambar Rendang Ponky Anda
           url: `${baseUrl}/hero/insta5.png`, 
-          width: 1200, // Ukuran ideal untuk Open Graph
-          height: 630, // Ukuran ideal untuk Open Graph
+          width: 1080, // Ukuran ideal untuk Open Graph
+          height: 600, // Ukuran ideal untuk Open Graph
           alt: "Rendang Ponky - Kelezatan Rendang Otentik",
         },
       ],
