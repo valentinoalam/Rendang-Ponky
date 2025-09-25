@@ -80,8 +80,21 @@ const Footer = () => {
             </Link>
           </div>
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <p>© 2023 Rendang Gurih. All rights reserved.</p>
-            <p className="text-sm opacity-75 mt-2">Authentic Indonesian cuisine delivered to your doorstep.</p>
+            {/* bg-rendang-900 */}
+        {/* Logo Rendang Ponky  
+
+          Kontak: "Hubungi kami di WhatsApp: 0812-xxx-xxxx"  
+
+          Ikon media sosial (Instagram, Facebook)  
+
+          "© 2025 Rendang Ponky – Kelezatan Tradisi dalam Setiap Gigitan"
+
+          Tujuan: Memberikan informasi kontak dan memperkuat branding.  
+
+          Tips: Jaga desain simpel dan bersih agar tidak mengalihkan perhatian dari CTA utama.
+        */}
+            <p>© 2025 Rendang Ponky All rights reserved.</p>
+            <p className="text-sm opacity-75 mt-2">– Kelezatan Tradisi dalam Setiap Gigitan.</p>
           </div>
         </div>
       </div>

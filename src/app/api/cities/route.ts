@@ -38,6 +38,7 @@ export async function GET(request: Request) {
       results: filteredCities,
     })
   } catch (error) {
+    console.error('Cities API error:', error);
     return NextResponse.json(
       {
         status: {
