@@ -300,7 +300,7 @@ export default function ShippingCalculator({
   }
 
   return (
-    <div className="space-y-6 p-6 bg-white rounded-lg shadow-sm border">
+    <div className="space-y-6 p-6 bg-rendang-golden rounded-lg shadow-sm border">
       <div className="flex items-center space-x-2 pb-4 border-b">
         <Package className="h-5 w-5 text-blue-600" />
         <h3 className="text-lg font-semibold">Shipping Calculator</h3>

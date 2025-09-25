@@ -100,12 +100,6 @@ input:checked ~ .toggle_dot {
   background-image: var(--noise-image);
 }
 
-svg {
-  height: 1px;
-}
-
-
-
 .tv-screen {
   position: absolute;
   width: 90vw;

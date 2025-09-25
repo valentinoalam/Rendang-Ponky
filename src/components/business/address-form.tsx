@@ -59,7 +59,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         />
       </div>
 
-      <div className="border p-4 rounded-md bg-white">
+      <div className="border p-4 rounded-md bg-rendang-darkbrown">
         <h3 className="font-medium mb-2">Shipping Calculator</h3>
         <p className="text-sm text-muted-foreground mb-4">
           Choose your location and shipping method to calculate delivery costs

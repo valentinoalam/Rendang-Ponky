@@ -1,13 +1,14 @@
 import React, { lazy, Suspense } from 'react'
 // import InteractiveBookSection from '@/components/sections/bookSection'
-import Products from '@/components/sections/products'
-import ProductCard from '@/components/product/card'
-import KeyBenefits from '@/components/sections/benefit'
-import TestimonialCarousel from '@/components/testimonial-carousel'
 import { CoolMode } from '@/components/ui/cool'
 import RandomStickersPage from '@/components/ui/random-sticker'
 import { FaqSection } from '@/components/sections/Faq'
-const VideoReview = lazy(() => import('@/components/video-review'));
+const ProductCard = lazy(() => import('@/components/product/card'));
+const Products = lazy(() => import('@/components/sections/products'));
+
+const KeyBenefits = lazy(() => import('@/components/sections/benefit'));
+const TestimonialCarousel = lazy(() => import('@/components/sections/testimonial'));
+const VideoReview = lazy(() => import('@/components/sections/video-review'));
 const SectionPlaceholder = ({ minHeight = 300 }: { minHeight?: number }) => (
   <div 
     className="w-full bg-gray-800 rounded-xl animate-pulse" 

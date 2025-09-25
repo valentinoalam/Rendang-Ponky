@@ -37,10 +37,10 @@
     --accent: hsl(12, 94%, 59%); /* #EB5A3C */
     --accent-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
 
-    --destructive: hsl(340, 80%, 47%); /* #D91656 */
+    --destructive: hsl(348, 80%, 47%); /* #D91656 */
     --destructive-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
 
-    --border: hsl(279, 56%, 25%); /* A slightly lighter purple for borders */
+    --border: hsl(340, 82%, 52%); /* A slightly lighter purple for borders */
     --input: hsl(0, 5%, 20%); /* #343131 */
     --ring: hsl(42, 100%, 50%); /* #FFB200 */
 

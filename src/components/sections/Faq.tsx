@@ -61,10 +61,10 @@ export function FaqSection() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-balance">
-              FREQUENTLY ASKED QUESTIONS (F&Q) – RENDANGPONKY
+            <h2 className="text-3xl font-bold tracking-tighter text-gold-vibrant sm:text-5xl text-balance">
+              FREQUENTLY ASKED QUESTIONS <span className="text-foreground">(F&Q) – RENDANGPONKY</span>
             </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-pretty">
+            <p className="max-w-[900px] text-gold-soft md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-pretty">
               Find answers to the most common questions about RENDANGPONKY.
             </p>
           </div>
@@ -72,8 +72,8 @@ export function FaqSection() {
         <div className="mx-auto w-full max-w-3xl py-12">
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
-              <AccordionItem value={`item-${index}`} key={index}>
-                <AccordionTrigger className="text-lg font-medium text-foreground hover:no-underline">
+              <AccordionItem value={`item-${index}`} className="border-b-rendang-500" key={index}>
+                <AccordionTrigger className="text-lg text-primary font-medium hover:no-underline">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>

@@ -5,10 +5,10 @@ import { Phone, MapPin, Clock, Instagram, Facebook, Mail } from 'lucide-react'
 
 const Footer = () => {
   return (
-    <footer className="bg-rendang-darkbrown text-white">
-      <div className="max-w-7xl mx-auto px-5 md:px-10 py-12">
+    <footer className="w-full bg-rendang-maroon text-white">
+      <div className="w-full">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className=" py-12 px-5 md:px-10 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-rendang-darkbrown gap-8 mb-8">
           
           {/* Brand Section */}
           <div className="lg:col-span-1">
@@ -120,7 +120,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Border */}
-        <div className="border-t border-gray-700 pt-6">
+        <div className="border-t w-full px-12 border-gray-700 pt-2 pb-4">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-center md:text-left">
               <p className="text-gray-300 text-sm">

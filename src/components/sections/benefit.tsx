@@ -1,6 +1,6 @@
 import { Check, Clock, Truck, Package, Utensils, Heart, Award } from "lucide-react"
 import Image from "next/image"
-import TrustBadges from "../trust-badge"
+import TrustBadges from "../business/trust-badge"
 
 const KeyBenefits = () => {
   const benefits = [

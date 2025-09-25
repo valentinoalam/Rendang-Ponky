@@ -45,13 +45,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
         />
       </div>
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-bold">{name}</CardTitle>
-        <CardDescription className="text-rendang-800 font-semibold">
+        <CardTitle className="text-xl text-rendang-golden font-bold">{name}</CardTitle>
+        <CardDescription className="text-rendang-cream font-semibold">
           Rp{price.toLocaleString()}
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-2">
-        <p className="text-gray-600 text-sm">{description}</p>
+        <p className="text-gold-soft text-sm">{description}</p>
       </CardContent>
       <CardFooter className="flex justify-between items-center pt-2">
         <div className="flex items-center space-x-2">
