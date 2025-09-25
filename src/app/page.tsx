@@ -117,12 +117,12 @@ const Index = () => {
         </section>
 
         {/* Key Benefits */}
-        <section className="mb-16">
+        <section id='key-benefit' className="mb-16">
           <KeyBenefits />
         </section>
 
         {/* CTA Section */}
-        <section>
+        <section id='faq' >
           <FaqSection />
         </section>
       </div>
