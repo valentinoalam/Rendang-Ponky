@@ -103,11 +103,20 @@
     --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
     --animate-background-position-spin: background-position-spin 3000ms infinite alternate;
     --animate-pulse-soft: pulse-soft 2s infinite ease-in-out;
-    --animate-shine: shine var(--duration) infinite linear;
+    --animate-shine: shine 5s infinite linear;
     --animate-border-beam: border-beam calc(var(--duration) * 1s) infinite linear;
     --animate-shiny-text: shiny-text 8s infinite;
     --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
-  
+    --animate-floating: floating 3s ease-in-out infinite;
+        
+    @keyframes floating {
+      from { transform: translateY(0px); }
+      /* The original used 'via', which is not a standard CSS keyword for keyframes.
+          It's corrected to '50%' (or '50%' can be used for more explicit control).
+          I'll use 50% for clarity, as 'via' implies a middle point. */
+      50% { transform: translateY(-10px); }
+      to { transform: translateY(0px); }
+    }
     @keyframes accordion-down {
       from {
         height: 0;

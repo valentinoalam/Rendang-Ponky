@@ -57,7 +57,7 @@ const faqData = [
 
 export function FaqSection() {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-background/80 rounded-4xl backdrop-blur-xs">
+    <section id='faq' className="w-full py-12 md:py-24 lg:py-32 bg-background/80 rounded-4xl backdrop-blur-xs">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
@@ -82,6 +82,7 @@ export function FaqSection() {
           </Accordion>
         </div>
       </div>
+      
     </section>
   )
 }

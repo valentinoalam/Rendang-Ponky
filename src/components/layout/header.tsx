@@ -167,14 +167,14 @@ const Header = () => {
             <div className="hidden lg:block">
               <Link
                 href="#contact"
-                className="bg-gold-vibrant/45 md:block hover:bg-opacity-90 text-gold-soft px-6 py-2.5 
+                className="cta-button-secondary border md:block hover:bg-opacity-90 text-gold-soft px-6 py-2.5 
                           rounded-full font-medium text-sm tracking-wide shadow-xs border-0.5 border-black
-                          hover:scale-105 hover:shadow-lg hover:border-0 hover:text-white
+                          hover:scale-105 hover:shadow-lg hover:border-white/30 hover:text-white
                           transition-all duration-300 ease-out
                           focus:outline-none focus:ring-2 focus:ring-blue-400/50"
                 onClick={closeMobileMenu}
               >
-                Get Started
+                Pesan
               </Link>
             </div>
           </div>

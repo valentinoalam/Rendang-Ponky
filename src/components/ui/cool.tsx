@@ -376,10 +376,11 @@ const applyParticleEffect = (
 
 interface CoolModeProps {
   children: ReactNode;
+  className?: string;
   options?: CoolParticleOptions;
 }
 
-export const CoolMode: React.FC<CoolModeProps> = ({ children, options }) => {
+export const CoolMode: React.FC<CoolModeProps> = ({ children, className, options }) => {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
@@ -388,5 +389,5 @@ export const CoolMode: React.FC<CoolModeProps> = ({ children, options }) => {
     }
   }, [options]);
 
-  return <span ref={ref}>{children}</span>;
+  return React.createElement('span', { className, ref }, children);
 };

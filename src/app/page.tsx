@@ -1,8 +1,14 @@
 import React, { lazy, Suspense } from 'react'
+
+
 // import InteractiveBookSection from '@/components/sections/bookSection'
 import { CoolMode } from '@/components/ui/cool'
 import RandomStickersPage from '@/components/ui/random-sticker'
 import { FaqSection } from '@/components/sections/Faq'
+import BubbleDivider from '@/components/ui/bubble-divider';
+import { ShineBorder } from '@/components/ui/shine-border';
+import { RainbowButton } from '@/components/ui/rainbow-button';
+import { cn } from '@/lib/utils';
 const ProductCard = lazy(() => import('@/components/product/card'));
 const Products = lazy(() => import('@/components/sections/products'));
 
@@ -27,6 +33,8 @@ const Index = () => {
    */
   return (
     <main className="w-full min-h-screen spice-bg text-foreground pt-16 pb-16 relative z-10 m-4 space-y-11 md:m-8">
+      
+      <RandomStickersPage >
       <div className="max-w-7xl px-4 md:px-8 lg:px-16 mx-auto">
         {/* Hero Section */}
         <section className="mb-16 min-h-screen relative">
@@ -69,17 +77,25 @@ const Index = () => {
                 spinSpeed: 12.5,
                 particleCount: 16
               }}
+              className=""
             >
-              <div className='max-w-70 w-fit z-30 -translate-y-9 justify-self-end p-0.5 md:p-2 backdrop-blur-xs rounded-lg py-2 shadow-lg border-rendang-darkbrown/30 border-2 bg-white/80'>
+              <div className='animate-floating max-w-70 w-fit z-30 -translate-y-9 justify-self-end p-0.5 md:p-2 backdrop-blur-xs rounded-lg py-2 shadow-lg border-rendang-darkbrown/30 border-2 bg-white/80'>
                 <button className="text-center cursor-pointer text-md md:text-xl text-rendang-maroon">
                   Dibuat dengan Rempah Pilihan, Tanpa Pengawet!
                 </button>
               </div>
             </CoolMode>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-              <button className="cta-button border animate-pulse-soft">
-                Pesan Sekarang? Persediaan terbatas!
-              </button>
+              <RainbowButton className="py-3 px-6 font-bold text-white shadow-lg rounded-full transition-transform duration-300 transform hover:scale-105">
+                <ShineBorder shineColor={"white"} className='opacity-30' />
+                <div className='bg-[linear-gradient(90deg,#deff00,#ffc107)] text-transparent bg-clip-text'>Buruan Pesan, <span className={cn(
+                  "mx-auto max-w-md",
+                  // Shine effect
+                  "animate-shiny-text [background-size:var(--shiny-width)_100%] bg-clip-text [background-position:0_0] bg-no-repeat [transition:background-position_1s_cubic-bezier(.6,.6,0,1)_infinite]",
+                  // Shine gradient
+                  "bg-gradient-to-r from-transparent via-black/80 via-50% to-transparent dark:via-white/80"
+                )}>Persediaan terbatas!</span></div>
+              </RainbowButton>
               {/* <button className="cta-button-secondary">
                 🎁 Beli 2 Gratis 1 – Buruan, Stok Terbatas!
               </button> */}
@@ -88,7 +104,6 @@ const Index = () => {
 
         </section>
         
-        <RandomStickersPage >
         {/* Product Showcase */}
         <section className="space-y-12 md:space-y-24">
           <ProductCard
@@ -103,7 +118,6 @@ const Index = () => {
             isReversed={true}
           />
         </section>
-        </RandomStickersPage>
         {/* <InteractiveBookSection /> */}
         {/* Video Review Section */}
         <section className="mb-16" id="video-review">
@@ -123,10 +137,10 @@ const Index = () => {
         </section>
 
         {/* CTA Section */}
-        <section id='faq' >
-          <FaqSection />
-        </section>
+        <BubbleDivider className='-translate-y-7 z-50' />
+        <FaqSection />
       </div>
+      </RandomStickersPage>
       <Products />
     </main>
   )

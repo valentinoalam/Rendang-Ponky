@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Star, Quote } from 'lucide-react';
 import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 interface Testimonial {
   name: string;
@@ -10,6 +11,7 @@ interface Testimonial {
   avatarUrl?: string;
   rating: 1 | 2 | 3 | 4 | 5;
   initials: string;
+  picUrl: string;
 }
 
 const testimonials: Testimonial[] = [
@@ -18,20 +20,27 @@ const testimonials: Testimonial[] = [
     location: "Jakarta",
     content: "Rasanya persis seperti buatan nenek! Langganan tiap bulan karena kualitasnya konsisten dan bumbu meresap sempurna.",
     rating: 5,
-    initials: "AS"
+    initials: "AS",
+    avatarUrl: "/diverse-woman-avatar.png",
+    picUrl: "/testimonial/240876494_395895961958092_5958117326717331875_n.jpg"
   },
   {
     name: "Budi Santoso", 
     location: "Surabaya",
     content: "Rendang paru nya kriuk di luar, lembut di dalam. Ga ada tandingannya! Sudah jadi favorit keluarga.",
     rating: 5,
+    avatarUrl: "/man-avatar.png",
+    picUrl: "/testimonial/120352172_968602276959512_2784991697189590394_n.jpg",
     initials: "BS"
+    
   },
   {
     name: "Cindy Wijaya",
     location: "Bandung", 
     content: "Praktis banget, tinggal panaskan. Sudah 3 kali reorder karena keluarga suka banget rasanya yang autentik.",
     rating: 4,
+    picUrl: "/testimonial/RendangPonkygoesAbuDhabi.jpg",
+    avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBB3juT2SFufvUP45p1y8maz-0fRUAQRq2C_xHrHLb2MHXfz8dEQBH__u8133SdMAnt1Z_bdJ2Z4xkDWjv6pqEX_E5TxJyrMr6xfjqS957e5ajZ1ar3yquOFA6vVOEyecZiKck89T10kkpu92U8AzCJy0NQWNFPN2TXmW-1q5YVA4gC83cIOpU-yV8os5GG3T8g_HutlODI6u0wlvOkq4bJbEtCT9kwKxuyNcUErWnh5JK1BiW74xTXGnia-QrjG2HhhxAl84akRyIj",
     initials: "CW"
   },
   {
@@ -39,6 +48,8 @@ const testimonials: Testimonial[] = [
     location: "Medan",
     content: "Walau saya orang Medan yang kuat pedas, rendang ini tetap juara! Bumbunya meresap sampai ke dalam.",
     rating: 5,
+    picUrl: "/testimonial/IMG-20220521-WA0020.jpg",
+    avatarUrl: "/man-avatar-2.png",
     initials: "DP"
   },
   {
@@ -46,6 +57,8 @@ const testimonials: Testimonial[] = [
     location: "Yogyakarta",
     content: "Packaging rapih, rendang masih panas sampai rumah. Rasanya bikin kangen kampung halaman!",
     rating: 5,
+    picUrl: "/testimonial/IMG-20220503-WA0001.jpg",
+    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBB3juT2SFufvUP45p1y8maz-0fRUAQRq2C_xHrHLb2MHXfz8dEQBH__u8133SdMAnt1Z_bdJ2Z4xkDWjv6pqEX_E5TxJyrMr6xfjqS957e5ajZ1ar3yquOFA6vVOEyecZiKck89T10kkpu92U8AzCJy0NQWNFPN2TXmW-1q5YVA4gC83cIOpU-yV8os5GG3T8g_HutlODI6u0wlvOkq4bJbEtCT9kwKxuyNcUErWnh5JK1BiW74xTXGnia-QrjG2HhhxAl84akRyIj',
     initials: "EP"
   },
   {
@@ -53,6 +66,8 @@ const testimonials: Testimonial[] = [
     location: "Semarang", 
     content: "Harga sebanding dengan kualitas. Porsi banyak, rasa juara. Pasti order lagi minggu depan!",
     rating: 4,
+    picUrl: "/testimonial/IMG-20220521-WA0013.jpg",
+    avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAPU5awtp_01wXYBzwHzRAiiocnNFk-2BumhPuSO7NP4rYlRoK0dNDYe-ZrHW5LGk_twt5MFxZXKPDjNO31KP-WFXgr4RilaWNeDnrXZgoNV2kYFzq7bz0KfGfpNZRjXAMixjsVhbh5YfazW4CV-RjKpPyAI4f7orkoSsyrkSZl697IhCyBOSoYbciPiyD4yoZJy01utNv5MfIPgF_ykEiZkwJiLBTADMm4V2ayFsKUTuxawCKOFTt7v0ibnOQYgcoKt7BAzY8bk9u2",
     initials: "FN"
   }
 ];
@@ -64,7 +79,7 @@ const TestimonialCarousel: React.FC = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const scrollWidth = scrollContainer.scrollWidth;
+    const scrollWidth = scrollContainer.clientWidth;
     // const clientWidth = scrollContainer.clientWidth;
     let scrollPosition = 0;
     const scrollSpeed = 0.5; // pixels per frame
@@ -133,7 +148,7 @@ const TestimonialCarousel: React.FC = () => {
 
         <div 
           ref={scrollRef}
-          className="flex gap-6 overflow-hidden"
+          className="flex gap-6 pt-3 overflow-hidden"
           style={{ 
             scrollBehavior: 'auto',
             maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)'
@@ -146,10 +161,10 @@ const TestimonialCarousel: React.FC = () => {
             >
               <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-orange-100 overflow-hidden">
                 {/* Header with gradient */}
-                <div className="bg-gradient-to-r h-1/2 from-orange-400 to-red-400 p-6 relative overflow-clip">
+                <div className="p-6 h-full min-h-40 relative">
                   <Image
-                    className="absolute mix-blend-multiply w-full h-full left-0 top-0 object-cover opacity-65"
-                    src="https://images.unsplash.com/photo-1671726203390-cdc4354ee2eb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                    className="absolute top-0 bottom-0 w-full h-full left-0 object-fill object-bottom opacity-65"
+                    src={testimonial.picUrl}
                     alt="Image Description"
                     width={400}
                     height={400}
@@ -160,9 +175,15 @@ const TestimonialCarousel: React.FC = () => {
                     }} />
                   <Quote className="absolute top-4 right-4 text-white/30" size={40} />
                   <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-xl font-bold border-2 border-white/30">
-                      {testimonial.initials}
-                    </div>
+                    <Avatar className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-xl font-bold border-2 border-white/30 place-self-center">
+                      {testimonial.avatarUrl ? (
+                        <AvatarImage src={testimonial.avatarUrl} alt={testimonial.name} />
+                      ) : (
+                        <AvatarFallback className="bg-rendang-cream text-rendang-maroon">
+                          {testimonial.name.charAt(0)}
+                        </AvatarFallback>
+                      )}
+                    </Avatar>
                     <div className="text-white">
                       <h3 className="font-bold text-lg">{testimonial.name}</h3>
                       <p className="text-white/80 text-sm">{testimonial.location}</p>
@@ -171,7 +192,7 @@ const TestimonialCarousel: React.FC = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
+                <div className="group-hover:translate-y-full transition-all duration-500 transform bg-gradient-to-r h-1/2 from-orange-400/80 to-red-400/90 backdrop-blur-xs p-6">
                   {/* Rating */}
                   <div className="flex justify-center mb-4 gap-1">
                     {renderStars(testimonial.rating)}

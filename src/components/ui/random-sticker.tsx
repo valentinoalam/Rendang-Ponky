@@ -1,6 +1,6 @@
 'use client'
-import ImageComponent from 'next/image';
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import ImgComponent from 'next/image';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 
 interface Sticker {
   id: string;
@@ -14,6 +14,8 @@ interface Sticker {
   animationDelay: number;
   floatDirection: number;
   scale: number;
+  animationType: 'float' | 'slideRight' | 'slideLeft' | 'wavyRight' | 'wavyLeft';
+  animationDuration: number;
 }
 
 interface ExtractedSprite {
@@ -21,34 +23,50 @@ interface ExtractedSprite {
   dataUrl: string;
   col: number;
   row: number;
+  width: number;
+  height: number;
 }
 
-type Position = { x: number; y: number;}
+type Position = { x: number; y: number; }
 
-const RandomStickersPage = ({children}: {children: React.ReactNode}) => {
+// Move configurations outside component to prevent re-creation
+const ASSET_SHEET_CONFIG = {
+  imageUrl: '/ingredients/Desktop1k.png',
+  columns: 7,
+  rows: 21,
+  totalStickers: 147
+};
+
+const STICKER_CONFIG = {
+  count: 25,
+  minSize: 100,
+  maxSize: 130,
+  minOpacity: 0.9,
+  maxOpacity: 1,
+  minDistance: 100,
+  maxAttempts: 50,
+  animationTypes: ['float', 'slideRight', 'slideLeft', 'wavyRight', 'wavyLeft'] as const,
+  animationWeights: {
+    float: 0.3,
+    slideRight: 0.2,
+    slideLeft: 0.2,
+    wavyRight: 0.15,
+    wavyLeft: 0.15
+  },
+  durationRanges: {
+    float: { min: 15, max: 25 },
+    slideRight: { min: 8, max: 15 },
+    slideLeft: { min: 8, max: 15 },
+    wavyRight: { min: 10, max: 18 },
+    wavyLeft: { min: 10, max: 18 }
+  }
+};
+
+const RandomStickersPage = ({ children }: { children: React.ReactNode }) => {
   const [stickers, setStickers] = useState<Sticker[]>([]);
   const [extractedSprites, setExtractedSprites] = useState<ExtractedSprite[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // Configuration for your asset sheet
-  const ASSET_SHEET_CONFIG = {
-    // Replace with your actual asset sheet URL
-    imageUrl: '/ingredients/Desktop1k.png', // Replace with your asset sheet path
-    columns: 7,       // Number of columns in your sprite sheet
-    rows: 21,          // Number of rows in your sprite sheet
-    totalStickers: 147 // Total number of stickers (or calculate: columns * rows)
-  };
-
-  const STICKER_CONFIG = {
-    count: 25,           // Number of stickers to display
-    minSize: 100,         // Minimum sticker size
-    maxSize: 130,         // Maximum sticker size
-    minOpacity: 0.9,     // Minimum opacity
-    maxOpacity: 1,     // Maximum opacity
-    animationDuration: 20, // Animation duration in seconds
-    minDistance: 100,    // Minimum distance between stickers (in pixels)
-    maxAttempts: 50      // Maximum attempts to find a valid position
-  };
 
   // Extract individual sprites from the asset sheet
   const extractSprites = useCallback((image: HTMLImageElement): ExtractedSprite[] => {
@@ -58,71 +76,76 @@ const RandomStickersPage = ({children}: {children: React.ReactNode}) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return [];
     
-    const sprites = [];
-
-    // Calculate sprite dimensions from actual image size
+    const sprites: ExtractedSprite[] = [];
     const spriteWidth = image.width / ASSET_SHEET_CONFIG.columns;
     const spriteHeight = image.height / ASSET_SHEET_CONFIG.rows;
 
-    // Set canvas size to calculated sprite size
     canvas.width = spriteWidth;
     canvas.height = spriteHeight;
 
-    const totalSprites = ASSET_SHEET_CONFIG.totalStickers || ASSET_SHEET_CONFIG.columns * ASSET_SHEET_CONFIG.rows;
+    const totalSprites = Math.min(
+      ASSET_SHEET_CONFIG.totalStickers, 
+      ASSET_SHEET_CONFIG.columns * ASSET_SHEET_CONFIG.rows
+    );
 
     for (let i = 0; i < totalSprites; i++) {
       const col = i % ASSET_SHEET_CONFIG.columns;
       const row = Math.floor(i / ASSET_SHEET_CONFIG.columns);
 
-      // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw the specific sprite onto canvas
       ctx.drawImage(
         image,
-        col * spriteWidth,   // source x (calculated from actual image)
-        row * spriteHeight,  // source y (calculated from actual image)
-        spriteWidth,         // source width (calculated from actual image)
-        spriteHeight,        // source height (calculated from actual image)
-        0,                   // dest x
-        0,                   // dest y
-        spriteWidth,         // dest width
-        spriteHeight         // dest height
+        col * spriteWidth,
+        row * spriteHeight,
+        spriteWidth,
+        spriteHeight,
+        0,
+        0,
+        spriteWidth,
+        spriteHeight
       );
 
-      // Convert canvas to data URL
-      const spriteDataUrl = canvas.toDataURL();
-      sprites.push({
-        id: i,
-        dataUrl: spriteDataUrl,
-        col,
-        row,
-        width: spriteWidth,
-        height: spriteHeight
-      });
+      try {
+        const spriteDataUrl = canvas.toDataURL('image/png');
+        sprites.push({
+          id: i,
+          dataUrl: spriteDataUrl,
+          col,
+          row,
+          width: spriteWidth,
+          height: spriteHeight
+        });
+      } catch (error) {
+        console.error('Failed to extract sprite:', error);
+      }
     }
 
     return sprites;
-  },[ASSET_SHEET_CONFIG.columns, ASSET_SHEET_CONFIG.rows, ASSET_SHEET_CONFIG.totalStickers]);
+  }, []);
 
   // Load asset sheet and extract sprites
   useEffect(() => {
-    const loadAssetSheet = () => {
-      const image = new Image();
-      image.crossOrigin = 'anonymous'; // Handle CORS if needed
-      
-      image.onload = () => {
+    const loadAssetSheet = async () => {
+      try {
+        const image = new Image();
+        image.crossOrigin = 'anonymous';
+        
+        await new Promise<void>((resolve, reject) => {
+          image.onload = () => resolve();
+          image.onerror = () => reject(new Error('Failed to load asset sheet'));
+          image.src = ASSET_SHEET_CONFIG.imageUrl;
+        });
+
         const sprites = extractSprites(image);
         setExtractedSprites(sprites);
-        setIsLoaded(true);
-      };
-
-      image.onerror = () => {
-        console.error('Failed to load asset sheet');
-        // Create placeholder sprites for demo
-        const placeholderSprites = [];
-        const totalSprites = ASSET_SHEET_CONFIG.columns * ASSET_SHEET_CONFIG.rows;
-        // Use default dimensions for placeholder
+      } catch (error) {
+        console.error('Error loading asset sheet:', error);
+        // Create placeholder sprites for fallback
+        const placeholderSprites: ExtractedSprite[] = [];
+        const totalSprites = Math.min(
+          ASSET_SHEET_CONFIG.totalStickers,
+          ASSET_SHEET_CONFIG.columns * ASSET_SHEET_CONFIG.rows
+        );
         const defaultSpriteWidth = 100;
         const defaultSpriteHeight = 100;
         
@@ -143,93 +166,142 @@ const RandomStickersPage = ({children}: {children: React.ReactNode}) => {
         }
         
         setExtractedSprites(placeholderSprites);
+      } finally {
         setIsLoaded(true);
-      };
-
-      image.src = ASSET_SHEET_CONFIG.imageUrl;
+      }
     };
 
     loadAssetSheet();
-    
-  }, [ASSET_SHEET_CONFIG.columns, ASSET_SHEET_CONFIG.imageUrl, ASSET_SHEET_CONFIG.rows, extractSprites]);
+  }, [extractSprites]);
 
   // Check if two positions are too close
   const isPositionTooClose = useCallback((newPos: Position, existingPositions: Position[], minDistance: number) => {
-    return existingPositions.some((pos: Position) => {
-      const dx = Math.abs(newPos.x - pos.x);
-      const dy = Math.abs(newPos.y - pos.y);
+    return existingPositions.some((pos) => {
+      const dx = newPos.x - pos.x;
+      const dy = newPos.y - pos.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
       return distance < minDistance;
     });
-  },[]);
+  }, []);
 
   // Convert percentage position to pixel position for distance calculation
-  const getPixelPosition = (percentX: number, percentY: number, containerWidth = window.innerWidth, containerHeight = window.innerHeight) => {
+  const getPixelPosition = useCallback((percentX: number, percentY: number) => {
     return {
-      x: (percentX / 100) * containerWidth,
-      y: (percentY / 100) * containerHeight
+      x: (percentX / 100) * window.innerWidth,
+      y: (percentY / 100) * window.innerHeight
     };
-  };
+  }, []);
+
+  // Select animation type based on weights
+  const selectAnimationType = useCallback((): Sticker['animationType'] => {
+    const rand = Math.random();
+    const weights = STICKER_CONFIG.animationWeights;
+    let cumulative = 0;
+    
+    for (const [type, weight] of Object.entries(weights)) {
+      cumulative += weight;
+      if (rand <= cumulative) {
+        return type as Sticker['animationType'];
+      }
+    }
+    
+    return 'float'; // fallback
+  }, []);
+
+  // Get animation duration based on type
+  const getAnimationDuration = useCallback((animationType: Sticker['animationType']): number => {
+    const range = STICKER_CONFIG.durationRanges[animationType];
+    return Math.random() * (range.max - range.min) + range.min;
+  }, []);
+
+  // Get position based on animation type
+  const getPositionForAnimationType = useCallback((animationType: Sticker['animationType']): Position => {
+    switch (animationType) {
+      case 'slideRight':
+      case 'wavyRight':
+        return { x: -10, y: Math.random() * 85 + 5 };
+      case 'slideLeft':
+      case 'wavyLeft':
+        return { x: 110, y: Math.random() * 85 + 5 };
+      case 'float':
+      default:
+        return { x: Math.random() * 85 + 5, y: Math.random() * 85 + 5 };
+    }
+  }, []);
+
   const generateStickers = useCallback(() => {
-    const newStickers = [];
-    const positions = [];
+    if (extractedSprites.length === 0) return;
+
+    const newStickers: Sticker[] = [];
+    const positions: Position[] = [];
+    
     for (let i = 0; i < STICKER_CONFIG.count; i++) {
-      // Random sprite selection
       const randomSpriteIndex = Math.floor(Math.random() * extractedSprites.length);
       const selectedSprite = extractedSprites[randomSpriteIndex];
       
-      // Generate size first as it affects collision detection
       const size = Math.random() * (STICKER_CONFIG.maxSize - STICKER_CONFIG.minSize) + STICKER_CONFIG.minSize;
+      const animationType = selectAnimationType();
       
-      // Try to find a position that's not too close to existing stickers
-      let validPosition = null;
+      let validPosition: Position | null = null;
       let attempts = 0;
       
+      const needsDistanceCheck = animationType === 'float';
+      
       while (!validPosition && attempts < STICKER_CONFIG.maxAttempts) {
-        const candidateX = Math.random() * 85 + 5; // 5% to 90% of screen width
-        const candidateY = Math.random() * 85 + 5; // 5% to 90% of screen height
+        const candidatePos = getPositionForAnimationType(animationType);
         
-        const pixelPos = getPixelPosition(candidateX, candidateY);
+        if (!needsDistanceCheck) {
+          validPosition = candidatePos;
+          break;
+        }
         
-        // Check distance from existing positions
-        if (positions.length === 0 || !isPositionTooClose(pixelPos, positions, STICKER_CONFIG.minDistance)) {
-          validPosition = { x: candidateX, y: candidateY };
+        const pixelPos = getPixelPosition(candidatePos.x, candidatePos.y);
+        
+        if (!isPositionTooClose(pixelPos, positions, STICKER_CONFIG.minDistance)) {
+          validPosition = candidatePos;
           positions.push(pixelPos);
+          break;
         }
         
         attempts++;
       }
       
-      // If no valid position found after max attempts, use a random position anyway
       if (!validPosition) {
-        validPosition = {
-          x: Math.random() * 85 + 5,
-          y: Math.random() * 85 + 5
-        };
-        const pixelPos = getPixelPosition(validPosition.x, validPosition.y);
-        positions.push(pixelPos);
+        validPosition = getPositionForAnimationType(animationType);
+        if (needsDistanceCheck) {
+          const pixelPos = getPixelPosition(validPosition.x, validPosition.y);
+          positions.push(pixelPos);
+        }
       }
       
-      // Create sticker with valid position
-      const sticker = {
-        id: `sticker-${i}`,
+      const sticker: Sticker = {
+        id: `sticker-${i}-${Date.now()}`,
         spriteId: selectedSprite.id,
         dataUrl: selectedSprite.dataUrl,
         x: validPosition.x,
         y: validPosition.y,
-        size: size,
+        size,
         opacity: Math.random() * (STICKER_CONFIG.maxOpacity - STICKER_CONFIG.minOpacity) + STICKER_CONFIG.minOpacity,
-        rotation: 0, //Math.random() * 360,
-        animationDelay: Math.random() * STICKER_CONFIG.animationDuration,
+        rotation: Math.random() * 360,
+        animationDelay: Math.random() * 5,
         floatDirection: Math.random() > 0.5 ? 1 : -1,
-        scale: 0.8 + Math.random() * 0.4, // 0.8 to 1.2 scale
+        scale: 0.8 + Math.random() * 0.4,
+        animationType,
+        animationDuration: getAnimationDuration(animationType)
       };
       
       newStickers.push(sticker);
     }
     
     setStickers(newStickers);
-  },[STICKER_CONFIG.animationDuration, STICKER_CONFIG.count, STICKER_CONFIG.maxAttempts, STICKER_CONFIG.maxOpacity, STICKER_CONFIG.maxSize, STICKER_CONFIG.minDistance, STICKER_CONFIG.minOpacity, STICKER_CONFIG.minSize, extractedSprites, isPositionTooClose]);
+  }, [
+    extractedSprites, 
+    selectAnimationType, 
+    getAnimationDuration, 
+    getPositionForAnimationType, 
+    isPositionTooClose, 
+    getPixelPosition
+  ]);
 
   // Generate random stickers when sprites are loaded
   useEffect(() => {
@@ -238,67 +310,149 @@ const RandomStickersPage = ({children}: {children: React.ReactNode}) => {
     }
   }, [isLoaded, extractedSprites, generateStickers]);
 
+  // Get animation class name based on type
+  const getAnimationClassName = (animationType: Sticker['animationType']): string => {
+    const animationClasses = {
+      slideRight: 'animate-slide-right',
+      slideLeft: 'animate-slide-left',
+      wavyRight: 'animate-wavy-right',
+      wavyLeft: 'animate-wavy-left',
+      float: 'animate-float'
+    };
+    return animationClasses[animationType] || animationClasses.float;
+  };
+
+  // Memoize sticker elements to prevent unnecessary re-renders
+  const stickerElements = useMemo(() => (
+    stickers.map((sticker) => (
+      <div
+        key={sticker.id}
+        className={`absolute z-0 pointer-events-none ${getAnimationClassName(sticker.animationType)}`}
+        style={{
+          left: `${sticker.x}%`,
+          top: `${sticker.y}%`,
+          width: `${sticker.size}px`,
+          height: `${sticker.size}px`,
+          opacity: sticker.opacity,
+          animationDelay: `${sticker.animationDelay}s`,
+          animationDuration: `${sticker.animationDuration}s`,
+          animationDirection: sticker.floatDirection === 1 ? 'normal' : 'reverse',
+          transform: `rotate(${sticker.rotation}deg) scale(${sticker.scale})`
+        }}
+      >
+        <ImgComponent 
+          src={sticker.dataUrl}
+          alt={`Sticker ${sticker.spriteId}`}
+          fill
+          className="object-contain drop-shadow-sm select-none"
+          draggable={false}
+          unoptimized // Since we're using data URLs
+        />
+      </div>
+    ))
+  ), [stickers]);
+
   return (
     <div className="min-h-screen w-full relative overflow-hidden">
-      {/* Hidden canvas for sprite extraction */}
-      <canvas
-        ref={canvasRef}
-        className="hidden"
-      />
+      <canvas ref={canvasRef} className="hidden" aria-hidden="true" />
 
-      {/* Loading indicator */}
       {!isLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center z-20">
-          <div className="bg-white/90 rounded-lg p-6 shadow-lg">
+        <div className="absolute inset-0 flex items-center justify-center z-20 bg-white/50 backdrop-blur-sm">
+          <div className="bg-white/90 rounded-lg p-6 shadow-lg border">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading stickers...</p>
+            <p className="text-gray-600 text-center">Loading stickers...</p>
           </div>
         </div>
       )}
 
-      {/* Floating Stickers */}
-      {stickers.map((sticker) => (
-        <div
-          key={sticker.id}
-          className="absolute z-0 pointer-events-none animate-float"
-          style={{
-            left: `${sticker.x}%`,
-            top: `${sticker.y}%`,
-            width: `${sticker.size}px`,
-            height: `${sticker.size}px`,
-            opacity: sticker.opacity,
-            transform: `rotate(${sticker.rotation}deg) scale(${sticker.scale})`,
-            animationDelay: `${sticker.animationDelay}s`,
-            animationDirection: sticker.floatDirection === 1 ? 'normal' : 'reverse'
-          }}
-        >
-          <ImageComponent fill
-            src={sticker.dataUrl}
-            alt={`Sticker ${sticker.spriteId}`}
-            className="w-full h-full object-contain drop-shadow-sm"
-            draggable={false}
-          />
-        </div>
-      ))}
-
-      {/* Main Content */}
+      {stickerElements}
       {children}
-      {/* Enhanced CSS animations */}
-      <style jsx>{`
+
+      <style jsx global>{`
         @keyframes float {
           0%, 100% {
-            transform: translateY(0px) rotate(var(--initial-rotation)) scale(var(--initial-scale));
+            transform: translateY(0px);
           }
           33% {
-            transform: translateY(-15px) rotate(calc(var(--initial-rotation) + 3deg)) scale(calc(var(--initial-scale) * 1.05));
+            transform: translateY(-15px);
           }
           66% {
-            transform: translateY(-8px) rotate(calc(var(--initial-rotation) - 2deg)) scale(calc(var(--initial-scale) * 0.98));
+            transform: translateY(-8px);
+          }
+        }
+        
+        @keyframes slideRight {
+          0% {
+            transform: translateX(calc(-1 * var(--sticker-size, 100px)));
+          }
+          100% {
+            transform: translateX(calc(100vw + var(--sticker-size, 100px)));
+          }
+        }
+        
+        @keyframes slideLeft {
+          0% {
+            transform: translateX(var(--sticker-size, 100px));
+          }
+          100% {
+            transform: translateX(calc(-100vw - var(--sticker-size, 100px)));
+          }
+        }
+        
+        @keyframes wavyRight {
+          0% {
+            transform: translateX(calc(-1 * var(--sticker-size, 100px))) translateY(0px);
+          }
+          25% {
+            transform: translateX(25vw) translateY(-30px);
+          }
+          50% {
+            transform: translateX(50vw) translateY(0px);
+          }
+          75% {
+            transform: translateX(75vw) translateY(30px);
+          }
+          100% {
+            transform: translateX(calc(100vw + var(--sticker-size, 100px))) translateY(0px);
+          }
+        }
+        
+        @keyframes wavyLeft {
+          0% {
+            transform: translateX(var(--sticker-size, 100px)) translateY(0px);
+          }
+          25% {
+            transform: translateX(-25vw) translateY(30px);
+          }
+          50% {
+            transform: translateX(-50vw) translateY(0px);
+          }
+          75% {
+            transform: translateX(-75vw) translateY(-30px);
+          }
+          100% {
+            transform: translateX(calc(-100vw - var(--sticker-size, 100px))) translateY(0px);
           }
         }
         
         .animate-float {
-          animation: float ${STICKER_CONFIG.animationDuration}s ease-in-out infinite;
+          animation: float var(--animation-duration, 20s) ease-in-out infinite;
+        }
+        
+        .animate-slide-right {
+          animation: slideRight var(--animation-duration, 20s) linear infinite;
+        }
+        
+        .animate-slide-left {
+          animation: slideLeft var(--animation-duration, 20s) linear infinite;
+        }
+        
+        .animate-wavy-right {
+          animation: wavyRight var(--animation-duration, 20s) ease-in-out infinite;
+        }
+        
+        .animate-wavy-left {
+          animation: wavyLeft var(--animation-duration, 20s) ease-in-out infinite;
         }
       `}</style>
     </div>

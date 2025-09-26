@@ -1,6 +1,8 @@
 import { Check, Clock, Truck, Package, Utensils, Heart, Award } from "lucide-react"
+
 import Image from "next/image"
 import TrustBadges from "../business/trust-badge"
+import ServingSuggestions from "./serving-suggest";
 
 const KeyBenefits = () => {
   const benefits = [
@@ -38,13 +40,6 @@ const KeyBenefits = () => {
     { icon: <Package className="h-5 w-5" />, label: "Netto", value: "250g per kemasan" },
     { icon: <Utensils className="h-5 w-5" />, label: "Porsi", value: "2-3 orang" },
     { icon: <Heart className="h-5 w-5" />, label: "Umur Simpan", value: "6 bulan (frozen)" },
-  ]
-
-  const servingSuggestions = [
-    { dish: "Rendang + Nasi Putih", description: "Klasik dan selalu nikmat", emoji: "🍚" },
-    { dish: "Rendang Sandwich", description: "Kreasi modern untuk sarapan", emoji: "🥪" },
-    { dish: "Rendang Pasta", description: "Fusion Indonesia-Italia", emoji: "🍝" },
-    { dish: "Rendang Salad Bowl", description: "Sehat dan bergizi tinggi", emoji: "🥗" },
   ]
 
   return (
@@ -155,36 +150,7 @@ const KeyBenefits = () => {
         </div>
 
         {/* Serving Suggestions */}
-        <div className="mb-8">
-          <h3 className="text-xl font-bold text-center mb-6 text-purple-900 text-balance md:text-2xl">
-            🍽️ Ide Penyajian Kreatif
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-            {servingSuggestions.map((suggestion, index) => (
-              <div
-                key={index}
-                className="group bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-200 hover:border-purple-300 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 text-center"
-              >
-                <div className="text-3xl mb-2 group-hover:scale-105 transition-transform duration-300">
-                  {suggestion.emoji}
-                </div>
-                <h4 className="font-bold text-purple-900 mb-1">{suggestion.dish}</h4>
-                <p className="text-xs text-purple-700">{suggestion.description}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 text-center">
-            <div className="inline-block bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-5 border border-yellow-200 shadow-md">
-              <h4 className="font-bold text-yellow-900 mb-1.5">🔥 Pro Tips Penyajian</h4>
-              <p className="text-sm text-yellow-800 max-w-2xl">
-                Panaskan rendang dengan api kecil selama 5 menit untuk rasa terbaik. Tambahkan sedikit santan segar jika
-                ingin tekstur lebih creamy!
-              </p>
-            </div>
-          </div>
-        </div>
+        <ServingSuggestions />
       </div>
     </div>
   )
