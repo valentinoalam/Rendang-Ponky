@@ -9,6 +9,8 @@ import BubbleDivider from '@/components/ui/bubble-divider';
 import { ShineBorder } from '@/components/ui/shine-border';
 import { RainbowButton } from '@/components/ui/rainbow-button';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import Steam from '@/components/ui/steam';
 const ProductCard = lazy(() => import('@/components/product/card'));
 const Products = lazy(() => import('@/components/sections/products'));
 
@@ -44,23 +46,19 @@ const Index = () => {
                 Pengen makan <span className='text-nowrap'>🥩</span>?
               </p>
             </div>
-            <div className='lightning' style={{ left: "-11%" }}>
-              <div className="noisy">
-                Rendang</div>
-              <div className="noisy">
-                Nusantara</div>
+            <div className='relative'>
+              <div className='lightning' style={{ left: "-11%" }}>
+                <div className="noisy">
+                  Rendang</div>
+                <div className="noisy">
+                  Nusantara</div>
+              </div>
+              <div className='lightning'>
+                <div className="noisy">
+                  <span>Nikmati Keaslian Rasa, 
+                  d🍴 Setiap Gigitan!</span></div>
+              </div>
             </div>
-            <div className='lightning'>
-              <div className="noisy">
-                <span>Nikmati Keaslian Rasa, 
-                d🍴 Setiap Gigitan!</span></div>
-            </div>
-            {/* <h1 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold text-rendang-darkbrown mb-4 font-playfair">
-                            <div className="absolute top-8 right-8 bg-white/90 backdrop-blur-xs rounded-full px-4 py-2 shadow-lg">
-              <span className="text-primary font-medium">特許取得製法</span>
-            </div>  
-            </h1> */}
-            
             <CoolMode 
               options={{
                 spritesheet: {
@@ -85,7 +83,7 @@ const Index = () => {
                 </button>
               </div>
             </CoolMode>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+            <div className="flex flex-col z-0 sm:flex-row justify-center gap-4 mb-8">
               <RainbowButton className="py-3 px-6 font-bold text-white shadow-lg rounded-full transition-transform duration-300 transform hover:scale-105">
                 <ShineBorder shineColor={"white"} className='opacity-30' />
                 <div className='bg-[linear-gradient(90deg,#deff00,#ffc107)] text-transparent bg-clip-text'>Buruan Pesan, <span className={cn(
@@ -99,9 +97,16 @@ const Index = () => {
               {/* <button className="cta-button-secondary">
                 🎁 Beli 2 Gratis 1 – Buruan, Stok Terbatas!
               </button> */}
+              
             </div>
           </div>
 
+          <div className='absolute -z-10 left-1/2 md:left-[70%] bottom-0 top-[70%] md:top-[90%] w-max h-full'>
+            <div className='relative w-fit'>
+              <Image src="/arts/rendang.png" alt="Rendang Paru" width={500} height={300} className="w-1/2 h-auto" />
+              <div className='absolute w-1/3 rounded-b-full -top-0 left-2'><Steam /></div>
+            </div>
+          </div>
         </section>
         
         {/* Product Showcase */}
