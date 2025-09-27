@@ -17,16 +17,16 @@ export default function BubbleDivider({ backgroundColor = '#342b42', className =
     const newBubbles = Array.from({ length: 100 }).map(() => ({
         // The logic to generate random values is now inside this effect.
         // This ensures it only runs on the client after the initial render.
-        size: (Math.random() * (4 - 2.0) + 1.5).toFixed(3),
-        distance: (Math.random() * (10.0 - 6.0) + 6.0).toFixed(3),
+        size: (Math.random() * (4 - 2.0) + 2.5).toFixed(3),
+        distance: (Math.random() * (7.0 - 6.0) + 3.0).toFixed(3),
         position: (Math.random() * (105.0 - -5.0) + -5.0).toFixed(3),
-        time: (Math.random() * (4.0 - 2.0) + 2.0).toFixed(3),
-        delay: (Math.random() * (-2.0 - -4.0) + -4.0).toFixed(3),
+        time: (Math.random() * (8.0 - 2.0) + 2.0).toFixed(3),
+        delay: (Math.random() * (2.0 - -4.0) + 4.0).toFixed(3),
     }));
     setBubbles(newBubbles);
   }, []);
   return (
-    <div className={`relative rounded-t-4xl w-[80%] mx-auto overflow-visible ${className}`}>
+    <div className={`relative rounded-t-4xl w-[80%] mx-auto overflow-visible z-10 ${className}`}>
       {/* Bubbles container */}
       <div 
         className="bubbles absolute top-0 left-0 right-0 h-4"

@@ -1,9 +1,17 @@
 'use client'
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Star, Quote } from 'lucide-react';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+// import Autoplay from 'embla-carousel-autoplay';
+import AutoScroll from 'embla-carousel-auto-scroll'
 interface Testimonial {
   name: string;
   location: string;
@@ -73,49 +81,9 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialCarousel: React.FC = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    const scrollWidth = scrollContainer.clientWidth;
-    // const clientWidth = scrollContainer.clientWidth;
-    let scrollPosition = 0;
-    const scrollSpeed = 0.5; // pixels per frame
-
-    const autoScroll = () => {
-      scrollPosition += scrollSpeed;
-      
-      // Reset to beginning when we've scrolled past half the content
-      if (scrollPosition >= scrollWidth / 2) {
-        scrollPosition = 0;
-      }
-      
-      scrollContainer.scrollLeft = scrollPosition;
-      requestAnimationFrame(autoScroll);
-    };
-
-    const animationId = requestAnimationFrame(autoScroll);
-
-    // Pause scrolling on hover
-    const handleMouseEnter = () => {
-      cancelAnimationFrame(animationId);
-    };
-
-    const handleMouseLeave = () => {
-      requestAnimationFrame(autoScroll);
-    };
-
-    scrollContainer.addEventListener('mouseenter', handleMouseEnter);
-    scrollContainer.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      scrollContainer?.removeEventListener('mouseenter', handleMouseEnter);
-      scrollContainer?.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
+  const plugin = React.useRef(
+    AutoScroll({ playOnInit: true, stopOnInteraction: true })
+  )
 
   const renderStars = (rating: number) => {
     return Array(5)
@@ -131,9 +99,6 @@ const TestimonialCarousel: React.FC = () => {
       ));
   };
 
-  // Duplicate testimonials for seamless loop
-  const duplicatedTestimonials = [...testimonials, ...testimonials];
-
   return (
     <div className="w-full py-12">
       <div className="max-w-7xl mx-auto px-4">
@@ -146,72 +111,78 @@ const TestimonialCarousel: React.FC = () => {
           </p>
         </div>
 
-        <div 
-          ref={scrollRef}
-          className="flex gap-6 pt-3 overflow-hidden"
-          style={{ 
-            scrollBehavior: 'auto',
-            maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)'
+        <Carousel
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          plugins={[plugin.current as any]}
+          className="w-full"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={() => plugin.current.play()}
+          opts={{
+            align: "start",
+            loop: true,
           }}
         >
-          {duplicatedTestimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 w-80 group"
-            >
-              <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-orange-100 overflow-hidden">
-                {/* Header with gradient */}
-                <div className="p-6 h-full min-h-40 relative">
-                  <Image
-                    className="absolute top-0 bottom-0 w-full h-full left-0 object-fill object-bottom opacity-65"
-                    src={testimonial.picUrl}
-                    alt="Image Description"
-                    width={400}
-                    height={400}
-                    sizes="100vw"
-                    style={{
-                      width: "100%",
-                      height: "auto"
-                    }} />
-                  <Quote className="absolute top-4 right-4 text-white/30" size={40} />
-                  <div className="flex items-center gap-4">
-                    <Avatar className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-xl font-bold border-2 border-white/30 place-self-center">
-                      {testimonial.avatarUrl ? (
-                        <AvatarImage src={testimonial.avatarUrl} alt={testimonial.name} />
-                      ) : (
-                        <AvatarFallback className="bg-rendang-cream text-rendang-maroon">
-                          {testimonial.name.charAt(0)}
-                        </AvatarFallback>
-                      )}
-                    </Avatar>
-                    <div className="text-white">
-                      <h3 className="font-bold text-lg">{testimonial.name}</h3>
-                      <p className="text-white/80 text-sm">{testimonial.location}</p>
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {testimonials.map((testimonial, index) => (
+              <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                <div className="group">
+                  <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-orange-100 overflow-hidden">
+                    {/* Header with gradient */}
+                    <div className="p-6 h-full min-h-40 relative">
+                      <Image
+                        className="absolute top-0 bottom-0 w-full h-full left-0 object-fill object-bottom opacity-65"
+                        src={testimonial.picUrl}
+                        alt="Image Description"
+                        width={400}
+                        height={400}
+                        sizes="100vw"
+                        style={{
+                          width: "100%",
+                          height: "auto"
+                        }} />
+                      <Quote className="absolute top-4 right-4 text-white/30" size={40} />
+                      <div className="flex items-center gap-4">
+                        <Avatar className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-xl font-bold border-2 border-white/30 place-self-center">
+                          {testimonial.avatarUrl ? (
+                            <AvatarImage src={testimonial.avatarUrl} alt={testimonial.name} />
+                          ) : (
+                            <AvatarFallback className="bg-rendang-cream text-rendang-maroon">
+                              {testimonial.name.charAt(0)}
+                            </AvatarFallback>
+                          )}
+                        </Avatar>
+                        <div className="text-stone-800 z-30">
+                          <h3 className="font-bold text-lg">{testimonial.name}</h3>
+                          <p className="text-stone-600/80 text-sm">{testimonial.location}</p>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Content */}
+                    <div className="group-hover:translate-y-full transition-all duration-500 transform bg-gradient-to-r h-1/2 from-orange-400/80 to-red-400/90 backdrop-blur-xs p-6">
+                      {/* Rating */}
+                      <div className="flex justify-center mb-4 gap-1">
+                        {renderStars(testimonial.rating)}
+                      </div>
+
+                      {/* Testimonial text */}
+                      <blockquote className="text-gray-700 text-center leading-relaxed font-medium relative">
+                        <span className="text-4xl text-orange-300 absolute -top-2 -left-2 font-serif">&quot;</span>
+                        {testimonial.content}
+                        <span className="text-4xl text-orange-300 absolute -bottom-4 -right-2 font-serif">&quot;</span>
+                      </blockquote>
+                    </div>
+
+                    {/* Bottom decoration */}
+                    <div className="h-2 bg-gradient-to-r from-orange-200 via-red-200 to-orange-200"></div>
                   </div>
                 </div>
-
-                {/* Content */}
-                <div className="group-hover:translate-y-full transition-all duration-500 transform bg-gradient-to-r h-1/2 from-orange-400/80 to-red-400/90 backdrop-blur-xs p-6">
-                  {/* Rating */}
-                  <div className="flex justify-center mb-4 gap-1">
-                    {renderStars(testimonial.rating)}
-                  </div>
-
-                  {/* Testimonial text */}
-                  <blockquote className="text-gray-700 text-center leading-relaxed font-medium relative">
-                    <span className="text-4xl text-orange-300 absolute -top-2 -left-2 font-serif">&quot;</span>
-                    {testimonial.content}
-                    <span className="text-4xl text-orange-300 absolute -bottom-4 -right-2 font-serif">&quot;</span>
-                  </blockquote>
-                </div>
-
-                {/* Bottom decoration */}
-                <div className="h-2 bg-gradient-to-r from-orange-200 via-red-200 to-orange-200"></div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex -left-12 bg-white/80 hover:bg-white border-orange-200 text-orange-600 hover:text-orange-700" />
+          <CarouselNext className="hidden md:flex -right-12 bg-white/80 hover:bg-white border-orange-200 text-orange-600 hover:text-orange-700" />
+        </Carousel>
 
         {/* Bottom stats */}
         <div className="flex justify-center items-center gap-8 mt-12 text-center">

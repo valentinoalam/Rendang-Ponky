@@ -303,14 +303,14 @@ export default function ShippingCalculator({
     <div className="space-y-6 p-6 bg-rendang-golden rounded-lg shadow-sm border">
       <div className="flex items-center space-x-2 pb-4 border-b">
         <Package className="h-5 w-5 text-blue-600" />
-        <h3 className="text-lg font-semibold">Shipping Calculator</h3>
+        <h3 className="text-lg text-stone-950 font-semibold">Shipping Calculator</h3>
       </div>
 
       {/* Origin Info */}
       <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
         <div className="flex items-center space-x-2 mb-2">
           <MapPin className="h-4 w-4 text-blue-600" />
-          <span className="text-sm font-medium text-blue-800">Shipping From:</span>
+          <span className="text-sm font-medium text-stone-800">Shipping From:</span>
         </div>
         <p className="text-sm text-blue-700">
           {ORIGIN.city}, {ORIGIN.district}, {ORIGIN.province} ({ORIGIN.postalCode})
@@ -435,7 +435,7 @@ export default function ShippingCalculator({
               className={`p-3 rounded-lg border transition-all text-center
                 ${selectedCourier === courier.id 
                   ? 'border-blue-500 bg-blue-50 text-blue-700' 
-                  : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-800'
                 }
                 ${(!isValidWeight || !hasDestination) && 'opacity-50 cursor-not-allowed'}
               `}
@@ -537,7 +537,7 @@ export default function ShippingCalculator({
           <p className="text-sm">Select a courier to view shipping options</p>
         </div>
       ) : (
-        <div className="text-center py-8 text-gray-400">
+        <div className="text-center py-8 text-gray-800">
           <Package className="h-8 w-8 mx-auto mb-3 opacity-50" />
           <p className="text-sm">Complete destination and weight to calculate shipping</p>
         </div>

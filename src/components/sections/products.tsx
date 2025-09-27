@@ -50,7 +50,7 @@ const Products: React.FC = () => {
   }, 0)
 
   return (
-    <div className="w-full bg-[#FDF4EE]">
+    <div className="w-full bg-background">
       {/* Hero Section */}
       <section className="max-h-[375px] relative overflow-clip box-content highlight text-white pt-12 md:pt-20">
         <div className="absolute w-full h-full top-0 left-0 border-b-rendang-800 border-s-rendang-300 border-t-gold-soft border-9"></div>

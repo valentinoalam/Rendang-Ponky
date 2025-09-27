@@ -41,7 +41,7 @@ const STICKER_CONFIG = {
   count: 25,
   minSize: 100,
   maxSize: 130,
-  minOpacity: 0.9,
+  minOpacity: 0.6,
   maxOpacity: 1,
   minDistance: 100,
   maxAttempts: 50,
@@ -357,7 +357,7 @@ const RandomStickersPage = ({ children }: { children: React.ReactNode }) => {
       <canvas ref={canvasRef} className="hidden" aria-hidden="true" />
 
       {!isLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center z-20 bg-white/50 backdrop-blur-sm">
+        <div className="static inset-0 flex items-center justify-center z-0">
           <div className="bg-white/90 rounded-lg p-6 shadow-lg border">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
             <p className="text-gray-600 text-center">Loading stickers...</p>

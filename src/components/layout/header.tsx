@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Logo from './logo';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import ShareButton from '../share-button';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -70,12 +71,12 @@ const Header = () => {
   const rightNavLinks = navLinks.slice(2);
 
   return (
-    <header className="w-full h-15 py-4 px-4 md:px-8 lg:px-16 bg-rendang-light/90 backdrop-blur-sm fixed top-0 z-50">
+    <header className="w-full h-15 py-4 px-4 md:px-8 lg:px-16 fixed top-0 z-50">
       {/* Fixed navbar */}
       <div className={`fixed font-playfair top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
         isScrolled 
-          ? 'bg-#FDF4EE/95 backdrop-blur-md shadow-lg border-b border-solid border-b-[#393528]/10' 
-          : 'bg-transparent backdrop-blur-sm'
+          ? 'bg-rendang-light/60 backdrop-blur-md shadow-lg border-b border-solid border-b-[#393528]/10' 
+          : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 lg:h-20 min-w-20 font-playfair text-rendang-maroon text-2xl font-bold gap-5">
@@ -86,7 +87,7 @@ const Header = () => {
                   key={link.href}
                   href={link.href}
                   className={`text-sm font-medium leading-normal transition-all duration-700 font-inter 
-                    tracking-wide hover:scale-105 ease-out relative group text-rendang-darkbrown hover:text-rendang-maroon
+                    tracking-wide hover:scale-105 ease-out relative group hover:text-rendang-maroon
                     ${
                     isActive(link.href) 
                       ? 'text-[#f3c334] font-bold' 
@@ -142,7 +143,7 @@ const Header = () => {
                   key={link.href}
                   href={link.href}
                   className={`text-sm font-medium leading-normal transition-all duration-700 font-inter 
-                    tracking-wide hover:scale-105 ease-out relative group text-rendang-darkbrown hover:text-rendang-maroon
+                    tracking-wide hover:scale-105 ease-out relative group hover:text-rendang-maroon
                     ${
                     isActive(link.href) 
                       ? 'text-[#f3c334] font-bold' 
@@ -165,17 +166,9 @@ const Header = () => {
 
             {/* CTA Button - Desktop */}
             <div className="hidden lg:block">
-              <Link
-                href="#contact"
-                className="cta-button-secondary border md:block hover:bg-opacity-90 text-gold-soft px-6 py-2.5 
-                          rounded-full font-medium text-sm tracking-wide shadow-xs border-0.5 border-black
-                          hover:scale-105 hover:shadow-lg hover:border-white/30 hover:text-white
-                          transition-all duration-300 ease-out
-                          focus:outline-none focus:ring-2 focus:ring-blue-400/50"
-                onClick={closeMobileMenu}
-              >
-                Pesan
-              </Link>
+              <ShareButton 
+                className="hover:bg-opacity-90 text-gold-soft"
+              />
             </div>
           </div>
         </div>
@@ -218,17 +211,7 @@ const Header = () => {
             ))}
             
             <div className="flex space-x-4 pt-6 border-t border-white/20">
-              <Link
-                href="#contact"
-                className="block text-white duration-300 ease-out
-                          px-6 py-3 rounded-lg font-medium text-center tracking-wide
-                          hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25
-                          bg-rendang-maroon md:block hover:bg-opacity-90 transition-colors
-                          focus:outline-none focus:ring-2 focus:ring-blue-400/50"
-                onClick={closeMobileMenu}
-              >
-                Get Started
-              </Link>
+              <ShareButton />
             </div>
           </div>
         </div>

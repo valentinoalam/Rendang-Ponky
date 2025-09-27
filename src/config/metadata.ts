@@ -1,11 +1,36 @@
 import type { Metadata } from 'next'
+import { WithContext, Product } from 'schema-dts' // Import necessary types
 
 interface MetadataConfig {
   [key: string]: Metadata
 }
 
-// Ganti dengan URL Rendang Ponky Anda
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://rendang-ponky.vercel.app" 
+const jsonLd: WithContext<Product> = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Rendang Ponky - Rendang Nusantara Otentik",
+  "description": "Rendang Ponky menyajikan rendang daging sapi otentik dan rendang paru premium. Bumbu melimpah, rasa Nusantara sejati. Tersedia varian Original dan Rendang Paru.",
+  "image": `${baseUrl}/rendang-ponky-hero.jpg`, // Ganti dengan URL gambar produk terbaik Anda
+  "offers": {
+    "@type": "AggregateOffer",
+    "lowPrice": "50000", // Harga terendah, ganti dengan harga aktual
+    "highPrice": "150000", // Harga tertinggi, ganti dengan harga aktual
+    "priceCurrency": "IDR",
+    "offerCount": "2" // Jumlah varian produk: Original dan Paru
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8", // Rating rata-rata, ganti dengan rating aktual
+    "reviewCount": "150" // Jumlah ulasan, ganti dengan jumlah aktual
+  },
+  "brand": {
+    "@type": "Brand",
+    "name": "Rendang Ponky"
+  },
+  "color": "Dark Brown", // Warna Rendang
+  "category": "Indonesian Food, Ready-to-Eat Rendang"
+};
 
 export const METADATA: MetadataConfig = {
   global: {
@@ -68,9 +93,16 @@ export const METADATA: MetadataConfig = {
       title: 'Rendang Ponky | Jual Rendang Daging dan Paru Online',
       description: 'Citarasa Minang yang sesungguhnya. Pesan Rendang Daging Sapi Original atau Rendang Paru Ponky secara online.',
       card: "summary_large_image",
-      creator: "@rendangponky", // Ganti dengan handle Twitter Anda
-      // Ganti dengan gambar Rendang Ponky Anda
+      creator: "@tonyfranky",
       images: `${baseUrl}/hero/insta5.png`, 
+    },
+    // --- Structured Data (JSON-LD) using schema-dts ---
+    // This is the main addition for SEO/Rich Snippets
+    alternates: {
+        canonical: `${baseUrl}`,
+        types: {
+          'application/ld+json': JSON.stringify(jsonLd),
+        }
     },
     formatDetection: {
       email: false,

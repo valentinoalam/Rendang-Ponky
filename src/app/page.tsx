@@ -142,7 +142,7 @@ const Index = () => {
         </section>
 
         {/* CTA Section */}
-        <BubbleDivider className='-translate-y-7 z-50' />
+        <BubbleDivider className='-translate-y-35 -sm:translate-y-10' />
         <FaqSection />
       </div>
       </RandomStickersPage>
