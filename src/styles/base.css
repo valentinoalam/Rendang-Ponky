@@ -17,7 +17,7 @@
 
   :root {
     --background: hsl(237, 49%, 15%); /* #1B1833 */
-    --foreground: hsl(46, 32%, 10%); /* #D6CFB4 */
+    --foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
 
     --card: hsl(279, 56%, 21%); /* #441752 */
     --card-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
@@ -35,7 +35,7 @@
     --muted-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
 
     --accent: hsl(12, 94%, 59%); /* #EB5A3C */
-    --accent-foreground: hsl(46, 32%, 90%); /* #D6CFB4 */
+    --accent-foreground: hsl(46, 32%, 10%); /* #D6CFB4 */
 
     --destructive: hsl(348, 80%, 47%); /* #D91656 */
     --destructive-foreground: hsl(46, 32%, 77%); /* #D6CFB4 */
